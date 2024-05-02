@@ -1,0 +1,37 @@
+--Created by Tirumala Rao Chimpiri
+--SQL to find Pages and components for a Permission List
+SELECT a.oprid,
+        a.emplid,
+        prsn.name,
+       b.rolename AS role,
+       c.classid AS permission_list,
+       e.menuname AS menu,
+       e.market AS market,
+       e.pnlgrpname AS component,
+       f.pnlname AS page
+  FROM psoprdefn a,
+       psroleuser b,
+       psroleclass c,
+       psauthitem d,
+       psmenuitem e,
+       pspnlgroup f,
+       PS_PERSONAL_DATA prsn
+ WHERE     a.oprid = b.roleuser
+       AND b.rolename = c.rolename
+       AND c.classid = d.classid
+       AND d.menuname = e.menuname
+       AND d.barname = e.barname
+       AND d.baritemname = e.itemname
+       AND e.pnlgrpname = f.pnlgrpname
+       AND e.menuname NOT IN ('APPLICATION_DESIGNER',
+                              'CLIENTPROCESS',
+                              'DATA_MOVER',
+                              'IMPORT_MANAGER',
+                              'OBJECT_SECURITY',
+                              'QUERY')
+       AND e.menuname NOT LIKE 'WEBLIB%'
+       AND A.OPRID = '<OPRID>'
+       AND c.classid = '<classid>'
+AND B.ROLENAME = '<ROLENAME>'
+AND E.PNLGRPNAME = '<Component Name>'
+and a.emplid = prsn.emplid(+);
